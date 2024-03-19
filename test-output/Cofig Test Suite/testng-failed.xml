@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Cofig Test Suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Config Test(failed)">
+    <classes>
+      <class name="org.doocti.AdminTestCase.ConfigurationTest">
+        <methods>
+          <include name="configTC013" invocation-numbers="0"/>
+          <include name="setUp"/>
+          <include name="vanish"/>
+        </methods>
+      </class> <!-- org.doocti.AdminTestCase.ConfigurationTest -->
+    </classes>
+  </test> <!-- Config Test(failed) -->
+</suite> <!-- Failed suite [Cofig Test Suite] -->

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Login Suite">
+  <test thread-count="5" name="Login Test">
+    <classes>
+      <class name="org.doocti.AdminTestCase.LoginTest">
+		  <methods>
+			  <include name="LoginTC001"/>
+			  <include name="LoginTC002"/>
+			  <include name="LoginTC003"/>
+			  <include name="LoginTC004"/>
+			  <include name="LoginTC005"/>
+			  <include name="LoginTC006"/>
+		  </methods>
+		</class>
+      
+    </classes>
+  </test> <!-- Login Test -->
+</suite> <!-- Login Suite -->

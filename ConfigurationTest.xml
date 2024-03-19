@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Cofig Test Suite">
+  <test thread-count="5" name="Config Test">
+    <classes>
+      <class name="org.doocti.AdminTestCase.ConfigurationTest">
+		  <methods>
+			  <!-- Creation Flow Testing-->
+			  
+			  <include name="configTC007"/>
+			  <include name="configTC008"/>
+		<!-- 	  <include name="configTC009"/>-->
+			  <include name="configTC010"/>
+			  <include name="configTC011"/>
+			  <include name="configTC012"/>
+			  <include name="configTC013"/>
+			  <include name="configTC014"/>
+			  <include name="configTC015"/>
+			  <include name="configTC016"/>
+			  <include name="configTC017"/>
+			  <include name="configTC018"/>
+			  <include name="configTC019"/>
+			  <include name="configTC020"/>
+			  <include name="configTC021"/>
+			  <include name="configTC022"/>
+			  
+			<!-- Deletion Flow Testing-->
+	<!-- 		<include name="configTC023"/>
+			<include name="configTC024"/>
+			<include name="configTC025"/>
+			<include name="configTC026"/>
+			<include name="configTC027"/>
+			<include name="configTC028"/>
+			<include name="configTC029"/>
+			<include name="configTC030"/>
+			<include name="configTC031"/>
+			<include name="configTC032"/>
+			<include name="configTC033"/>
+			<include name="configTC034"/>
+			<include name="configTC035"/>
+			<include name="configTC036"/>
+			<include name="configTC037"/>
+		-->	  
+		  </methods>
+	  </class>
+    </classes>
+  </test> <!-- Config Test -->
+</suite> <!-- Cofig Test Suite -->
