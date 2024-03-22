@@ -23,11 +23,14 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.WheelInput;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -46,9 +49,35 @@ public class SeleniumBase implements SeleniumInterface {
 	Robot rb = null;
 	
 	Actions action = null;
+	
+	String Url = "https://console-v2.doocti.com/v2.1.106/auth/login";
+	
+	String UserEmail = "developv2_admin@doocti.com";
+
+	String UserPassword = "Doocti@123";
+
+	
 
 
+	@BeforeTest
+	public void setUp() {
 
+		browaerSetup(Url);
+		type(element(Locators.xpath, "//input[@aria-label='UserName']"), UserEmail);
+		type(element(Locators.xpath, "//input[@aria-label='Password']"), UserPassword);
+		click(element(Locators.xpath, "//div[text()='Login']"));
+		isDisplay(element(Locators.xpath, "//i[@title='Sign Out']"));
+
+	}
+	
+	@AfterTest
+	public void setDown() 
+	
+	{	
+//		 quit();
+		 
+	}
+	
 	public void browaerSetup(String url) {
 		
 		WebDriverManager.chromedriver().setup();
@@ -258,20 +287,21 @@ public class SeleniumBase implements SeleniumInterface {
 		
 		Assert.assertTrue(expecedValue, "Element is Not displayed");
 		
-		System.out.println(expecedValue);
+//		System.out.println(expecedValue);
 		
 		return expecedValue;
 		
 	}
+	
+	
 
 	public boolean isSelect(WebElement ele) {
 		
 		WebElement element = wait.until(ExpectedConditions.visibilityOf(ele));
 
-		boolean expecedValue = element.isDisplayed();
+		boolean expecedValue = element.isSelected();
 		
-		Assert.assertTrue(expecedValue, "Element is Not Selected");
-		
+
 		return expecedValue;
 
 
@@ -291,7 +321,7 @@ public class SeleniumBase implements SeleniumInterface {
 			if(actualValue.contains(value)) {
 				
 				flag = true;
-					
+						
 			}
 		}
 
@@ -313,7 +343,19 @@ public class SeleniumBase implements SeleniumInterface {
 				flag = true;
 					
 			}
-		}
+			else {
+				
+				driver.findElement(By.xpath("//i[text()='chevron_right']")).click();
+				
+				actualValue = Data.getText();
+				
+				if(actualValue.contains(value)) {
+					
+					flag = true;
+					
+				}
+			}
+		}	
 
 		Assert.assertFalse(flag, "Not Deleted...!");
 	}
@@ -342,11 +384,37 @@ public class SeleniumBase implements SeleniumInterface {
 		
 		WebElement element = wait.until(ExpectedConditions.visibilityOf(ele));
 		
-		return element.getText();
+		String expectedValue = element.getText();
+		
+		System.out.println(expectedValue);
+		
+		return expectedValue;
 		
 		
 	}
+	
+	public void getText(WebElement ele ,String expectedcreateValue) {
+		
+		WebElement element = wait.until(ExpectedConditions.visibilityOf(ele));
+		
+		String text = element.getAttribute("value");
+		
+		System.out.println(text);
+		
+		Assert.assertEquals(text, expectedcreateValue, "Not Created...!");
+	}
+	
+	
 
+
+	
+	public void scroll(WebElement ele , int scrollAmount) {
+		
+        WheelInput.ScrollOrigin scrollOrigin = WheelInput.ScrollOrigin.fromElement(ele);
+        new Actions(driver)
+                .scrollFromOrigin(scrollOrigin, 0, scrollAmount)
+                .perform();
+	}
 	
 	public void robot(String filelocation) {
 		
@@ -386,7 +454,7 @@ public class SeleniumBase implements SeleniumInterface {
 		rb.keyPress(KeyEvent.VK_J);
 	}
 	
-// Admin Config Data's
+//  		<============================================ Configuration Data's ==============================================>
 	
 
 	/**
@@ -460,12 +528,14 @@ public class SeleniumBase implements SeleniumInterface {
 	@DataProvider(name = "TicketStatusData")
 	public String[][] ticketStatusData() {
 
-		String [][] ticketStatusdata = new String[1][4];
+		String [][] ticketStatusdata = new String[1][5];
 
 		ticketStatusdata[0][0]="Test Status";
 		ticketStatusdata[0][1]="Demo";
 		ticketStatusdata[0][2]="3";
 		ticketStatusdata[0][3]="1";
+		ticketStatusdata[0][4]="Inactive";
+
 
 		return ticketStatusdata;
 
@@ -474,7 +544,7 @@ public class SeleniumBase implements SeleniumInterface {
 	@DataProvider(name = "PausecodeData")
 	public String[][] pausecodeData() {
 
-		String [][] pausecodedata = new String[1][6];
+		String [][] pausecodedata = new String[1][7];
 
 		pausecodedata[0][0]="Test Pause Code";
 		pausecodedata[0][1]="Demo";
@@ -482,6 +552,8 @@ public class SeleniumBase implements SeleniumInterface {
 		pausecodedata[0][3]="30";
 		pausecodedata[0][4]="4";
 		pausecodedata[0][5]="1";
+		pausecodedata[0][6]="Inactive";
+
 
 
 		return pausecodedata;
@@ -495,6 +567,7 @@ public class SeleniumBase implements SeleniumInterface {
 
 		audiodata[0][0]="Testing";
 		audiodata[0][1]="D:\\Testing File\\demo1.mp3";
+		audiodata[0][2]="Inactive";
 
 		return audiodata;
 
@@ -516,13 +589,15 @@ public class SeleniumBase implements SeleniumInterface {
 	@DataProvider(name = "DidData")
 	public String[][] didData() {
 
-		String [][]diddata = new String[1][5];
+		String [][]diddata = new String[1][6];
 
 		diddata[0][0]= "9876543210";
 		diddata[0][1] ="Test purpose";
 		diddata[0][2] ="D:\\Testing File\\sample_did.csv";
 		diddata[0][3] ="4";
 		diddata[0][4] ="2";
+		diddata[0][5] ="Inactive";
+
 
 		return diddata;
 
@@ -531,12 +606,14 @@ public class SeleniumBase implements SeleniumInterface {
 	@DataProvider(name = "TagData")
 	public String[][] tagData() {
 
-		String [][]tagdata = new String[1][4];
+		String [][]tagdata = new String[1][5];
 
 		tagdata[0][0]= "Testing";
 		tagdata[0][1] ="Test purpose";
 		tagdata[0][2] ="3";
 		tagdata[0][3] ="1";
+		tagdata[0][4] ="inactive";
+
 
 
 		return tagdata;
@@ -546,13 +623,15 @@ public class SeleniumBase implements SeleniumInterface {
 	@DataProvider(name = "AnnouncementData")
 	public String[][] announcementData() {
 
-		String [][]announcementdata = new String[1][5];
+		String [][]announcementdata = new String[1][6];
 
 		announcementdata[0][0]= "Testing";
 		announcementdata[0][1] ="Test purpose";
 		announcementdata[0][2] ="Preview Campaign";
 		announcementdata[0][3] ="3";
 		announcementdata[0][4] ="1";
+		announcementdata[0][5] ="Inactive";
+
 
 		return announcementdata;
 
@@ -561,7 +640,7 @@ public class SeleniumBase implements SeleniumInterface {
 	@DataProvider(name = "ScriptData")
 	public String[][] scriptData() {
 
-		String [][]scriptdata = new String[1][7];
+		String [][]scriptdata = new String[1][8];
 
 		scriptdata[0][0]= "Testing Urrl";
 		scriptdata[0][1] ="Test purpose";
@@ -570,6 +649,7 @@ public class SeleniumBase implements SeleniumInterface {
 		scriptdata[0][4] ="URL";
 		scriptdata[0][5] ="3";
 		scriptdata[0][6] ="1";
+		scriptdata[0][7] ="INACTIVE";
 
 		return scriptdata;
 
@@ -596,7 +676,7 @@ public class SeleniumBase implements SeleniumInterface {
 	@DataProvider(name = "TimezoneData")
 	public String[][] timezoneData() {
 
-		String [][]timezonedata = new String[1][9];
+		String [][]timezonedata = new String[1][10];
 
 		timezonedata[0][0]= "Test";
 		timezonedata[0][1] ="Testing";
@@ -607,6 +687,10 @@ public class SeleniumBase implements SeleniumInterface {
 		timezonedata[0][6] ="Active";
 		timezonedata[0][7] ="5";
 		timezonedata[0][8] ="1";
+		timezonedata[0][9] ="Inactive";
+		
+
+		
 
 
 
@@ -617,23 +701,26 @@ public class SeleniumBase implements SeleniumInterface {
 	@DataProvider(name = "MeetingTitleData")
 	public String[][] meetingtitleData() {
 
-		String[][] meetingtitledata = new String[1][5];
+		String[][] meetingtitledata = new String[1][6];
 
 		meetingtitledata[0][0] ="Test Title";
 		meetingtitledata[0][1] ="Testing";
 		meetingtitledata[0][2] ="Testing Purpose";
 		meetingtitledata[0][3] ="4";
 		meetingtitledata[0][4] ="1";
+		meetingtitledata[0][5] ="Inactive";
+
 
 
 		return meetingtitledata;
 	}
 
+	
+//			<============================================ Configuration Data's ==============================================>
 
-	/**
-	 * Users and Groups Data's
-	 * 
-	 */
+	
+//           <============================================ Users and Groups Data's ==============================================>
+	
 
 	@DataProvider(name= "UserGroupData")
 	public String[][] usergroupData() {
@@ -651,10 +738,10 @@ public class SeleniumBase implements SeleniumInterface {
 
 		String[][] userdata = new String[1][13];
 
-		userdata[0][0] = "developv2_agent10@doocti.com";
+		userdata[0][0] = "testenv_agent21";
 		userdata[0][1] = "Testing Purpose";
 		userdata[0][2] = "376";
-		userdata[0][3] = "developv2_agent12@doocti.com";
+		userdata[0][3] = "testenv_agent21@doocti.com";
 		userdata[0][4] = "Doocti@123";
 		userdata[0][5] = "Agent";
 		userdata[0][6] = "Testing";
@@ -667,7 +754,7 @@ public class SeleniumBase implements SeleniumInterface {
 
 		userdata[0][8] = "Demo";
 		userdata[0][9] = "377";
-		userdata[0][10] = "Agent";
+		userdata[0][10] = "Administrator";
 		userdata[0][11] = "developv2_admin";
 		userdata[0][12] = "Inactive";
 
@@ -745,7 +832,7 @@ public class SeleniumBase implements SeleniumInterface {
 		teamdata[0][3] ="Test Source";
 		teamdata[0][4] ="Test Channel";
 		teamdata[0][5] ="Preview Campaign";
-		teamdata[0][6] ="developv2_agent02@doocti.com";
+		teamdata[0][6] ="developv2_agent04@doocti.com";
 
 		//Create and Delete Assertion Data
 
@@ -766,6 +853,9 @@ public class SeleniumBase implements SeleniumInterface {
 		return teamdata;
 	}
 
+//  		<============================================ Users and Groups Data's ==============================================>
+
+//  		<============================================ CRM Data's ==============================================>
 
 	/**
 	 * CRM Data's
@@ -787,7 +877,7 @@ public class SeleniumBase implements SeleniumInterface {
 		campaigndata[0][5] = "500";
 		campaigndata[0][6] = "1.2";
 		campaigndata[0][7] = "10";
-		campaigndata[0][8] = "Testing";
+		campaigndata[0][8] = "Testing Script";
 		campaigndata[0][9] = "5";
 		campaigndata[0][10] = "Text";	
 		campaigndata[0][11] = "Test Predictive";
@@ -841,7 +931,7 @@ public class SeleniumBase implements SeleniumInterface {
 		
 		String[][]listdata = new String [1][5];
 		
-		listdata[0][0] ="2223";
+		listdata[0][0] ="2233";
 		listdata[0][1] ="Test List";
 		listdata[0][2] ="Testing";
 		listdata[0][3] ="Preview Campaign";
@@ -880,7 +970,7 @@ public class SeleniumBase implements SeleniumInterface {
 		
 		contactdata[0][0] ="Test Contact";
 		contactdata[0][1] ="9898989898";
-		contactdata[0][2] ="C:\\Users\\User\\Desktop\\ContactList.csv";
+		contactdata[0][2] ="D:\\Testing File\\Contact_list.csv";
 
 		
 		return contactdata;
@@ -897,9 +987,9 @@ public class SeleniumBase implements SeleniumInterface {
 		ticketdata[0][2] ="Testing Subject";
 		ticketdata[0][3] ="Testing Description";
 		ticketdata[0][4] ="9514380497";
-		ticketdata[0][5] ="11";
+		ticketdata[0][5] ="25";
 		ticketdata[0][6] ="Low";
-		ticketdata[0][7] ="Test Channel";
+		ticketdata[0][7] ="Channel";
 
 		
 		return ticketdata;
@@ -908,6 +998,7 @@ public class SeleniumBase implements SeleniumInterface {
 
 
 
+//  		<============================================ CRM Data's ==============================================>
 
 
 

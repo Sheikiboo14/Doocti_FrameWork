@@ -9,7 +9,7 @@
 			  
 			  <include name="configTC007"/>
 			  <include name="configTC008"/>
-		<!-- 	  <include name="configTC009"/>-->
+		<!-- <include name="configTC009"/>-->
 			  <include name="configTC010"/>
 			  <include name="configTC011"/>
 			  <include name="configTC012"/>
@@ -24,8 +24,9 @@
 			  <include name="configTC021"/>
 			  <include name="configTC022"/>
 			  
-			<!-- Deletion Flow Testing-->
-	<!-- 		<include name="configTC023"/>
+			<!-- Update Status Flow Flow Testing-->
+<!-- 			
+			<include name="configTC023"/>
 			<include name="configTC024"/>
 			<include name="configTC025"/>
 			<include name="configTC026"/>
@@ -37,10 +38,26 @@
 			<include name="configTC032"/>
 			<include name="configTC033"/>
 			<include name="configTC034"/>
+		-->	
+			<!-- Deletion Flow Testing-->
+			
 			<include name="configTC035"/>
 			<include name="configTC036"/>
 			<include name="configTC037"/>
-		-->	  
+			<include name="configTC038"/>
+			<include name="configTC039"/>
+			<include name="configTC040"/>
+			<include name="configTC041"/>
+			<include name="configTC042"/>
+			<include name="configTC043"/>
+			<include name="configTC044"/>
+			<include name="configTC045"/>
+			<include name="configTC046"/>
+			<include name="configTC047"/>
+			<include name="configTC048"/>
+			<include name="configTC049"/>
+			
+		
 		  </methods>
 	  </class>
     </classes>

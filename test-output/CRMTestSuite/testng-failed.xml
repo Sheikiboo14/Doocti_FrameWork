@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [CRMTestSuite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="CRMTest(failed)">
+    <classes>
+      <class name="org.doocti.AdminTestCase.CRMTest">
+        <methods>
+          <include name="crmTC069" invocation-numbers="0"/>
+          <include name="CRM"/>
+          <include name="setUp"/>
+          <include name="setDown"/>
+        </methods>
+      </class> <!-- org.doocti.AdminTestCase.CRMTest -->
+    </classes>
+  </test> <!-- CRMTest(failed) -->
+</suite> <!-- Failed suite [CRMTestSuite] -->

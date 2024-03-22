@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="UserGroupSuite">
+  <test thread-count="5" name="UserGroupTest">
+    <classes>
+      <class name="org.doocti.AdminTestCase.UsersGroupTest">
+		  <methods>
+			  <include name="usergroupTC050"/>
+			  <include name="usergroupTC051"/>
+			  <include name="usergroupTC052"/>
+			  <include name="usergroupTC053"/>
+			  <include name="usergroupTC054"/>
+			  <include name="usergroupTC055"/>
+			  <include name="usergroupTC056"/>
+			  <include name="usergroupTC057"/>
+			<!-- <include name="usergroupTC058"/>
+			  <include name="usergroupTC059"/> -->
+			  <include name="usergroupTC060"/>
+			  <include name="usergroupTC061"/>
+			  <include name="usergroupTC062"/>
+			  <include name="usergroupTC063"/>
+			  <include name="usergroupTC064"/>
+			  
+			  
+		  </methods>
+		  
+	  </class>
+    </classes>
+  </test> <!-- UserGroupTest -->
+</suite> <!-- UserGroupSuite -->

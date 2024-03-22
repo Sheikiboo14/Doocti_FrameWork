@@ -3,6 +3,7 @@ package org.doocti.AdminTestCase;
 import org.doocti.seleniumEnum.Locators;
 import org.doocti.seleniumbase.SeleniumBase;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -10,23 +11,12 @@ import org.testng.annotations.Test;
 public class ConfigurationTest extends SeleniumBase{
 
 	@BeforeTest
-	public void setUp() {
+	public void config() {
 
-		browaerSetup("https://console-v2.doocti.com/v2.1.106/auth/login");
-		type(element(Locators.xpath, "//input[@aria-label='UserName']"), "developv2_admin@doocti.com");
-		type(element(Locators.xpath, "//input[@aria-label='Password']"), "Doocti@123");
-		click(element(Locators.xpath, "//div[text()='Login']"));
-		isDisplay(element(Locators.xpath, "//i[@title='Sign Out']"));
 		click(element(Locators.xpath, "//div[text()='Configurations']"));
 
 	}
-	
-	@AfterTest
-	public void vanish() {
-		
-		/*
-		 * quit();
-		 */	}
+
 
 	@Test(dataProvider="QueueData",dataProviderClass=SeleniumBase.class)
 	public void configTC007(String queuedata[]) {
@@ -336,11 +326,12 @@ public class ConfigurationTest extends SeleniumBase{
 
 	}
 	
+
 	//Updation Flow
 	
 
 	@Test(dataProvider="DispoData",dataProviderClass=SeleniumBase.class)
-	public void configTC038(String dispodata[]) {
+	public void configTC023(String dispodata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Dispositions']"));
 		click(element(Locators.xpath, "//td[text()='"+dispodata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light blue--text']"));
@@ -353,12 +344,172 @@ public class ConfigurationTest extends SeleniumBase{
 
 	}
 	
+	@Test(dataProvider="SubDispoData",dataProviderClass=SeleniumBase.class)
+	public void configTC024(String subdispoData[]) {
+
+		click(element(Locators.xpath, "//span[text()='Sub-Dispositions']"));
+		click(element(Locators.xpath, "//td[text()='"+subdispoData[1]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light blue--text']"));
+		click(element(Locators.xpath, "(//label[text()='Status']/following-sibling::div)[1]"));
+		consoleLog();
+		dropdown(element(Locators.xpath, "(//div[@role='list'])[3]"), element(Locators.xpath, "(//div[text()='"+subdispoData[5]+"'])[3]"));
+		click(element(Locators.xpath, "//div[text()='Update']"));
+		click(element(Locators.xpath, "(//div[text()='Close'])[3]"));
+		updateAssert(element(Locators.xpath, "//td[text()='"+subdispoData[1]+"']//following-sibling::td[2]"), subdispoData[5]);
+
+
+	}
+	
+	
+	@Test(dataProvider="LeadStatusData",dataProviderClass=SeleniumBase.class)
+	public void configTC025(String leadstatusdata[]) {
+
+		click(element(Locators.xpath, "//span[text()='Lead Status']"));
+		click(element(Locators.xpath, "//td[text()='"+leadstatusdata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light blue--text']"));
+		click(element(Locators.xpath, "(//label[text()='Status']/following-sibling::div)[1]"));
+		dropdown(element(Locators.xpath, "(//div[@role='list'])[3]"), element(Locators.xpath, "(//div[text()='"+leadstatusdata[2]+"'])[2]"));
+		click(element(Locators.xpath, "//div[text()='Update']"));
+		click(element(Locators.xpath, "(//div[text()='Close'])[3]"));
+		updateAssert(element(Locators.xpath, "//td[text()='"+leadstatusdata[0]+"']//following-sibling::td[2]"), leadstatusdata[2]);
+
+	}
+
+	@Test(dataProvider="TicketStatusData",dataProviderClass=SeleniumBase.class)
+	public void configTC026(String ticketStatusdata[]) {
+
+		click(element(Locators.xpath, "//span[text()='Ticket Status']"));
+		click(element(Locators.xpath, "//td[text()='"+ticketStatusdata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light blue--text']"));
+		click(element(Locators.xpath, "(//label[text()='Status']/following-sibling::div)[1]"));
+		dropdown(element(Locators.xpath, "(//div[@role='list'])[3]"), element(Locators.xpath, "(//div[text()='"+ticketStatusdata[4]+"'])[2]"));
+		click(element(Locators.xpath, "//div[text()='Update']"));
+		click(element(Locators.xpath, "(//div[text()='Close'])[3]"));
+		updateAssert(element(Locators.xpath, "//td[text()='"+ticketStatusdata[0]+"']//following-sibling::td[2]"), ticketStatusdata[4]);
+
+
+	}
+	
+	@Test(dataProvider="PausecodeData",dataProviderClass=SeleniumBase.class)
+	public void configTC027(String pausecodedata[]) {
+
+		click(element(Locators.xpath, "//span[text()='Pause Codes']"));
+		click(element(Locators.xpath, "//td[text()='"+pausecodedata[0]+"']//following-sibling::td[4]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light blue--text']"));
+		click(element(Locators.xpath, "//label[text()='Status']/following-sibling::div"));
+		dropdown(element(Locators.xpath, "(//div[@role='list'])[2]"), element(Locators.xpath, "//div[text()='"+pausecodedata[6]+"']"));
+		click(element(Locators.xpath, "(//input[@aria-label='Time'])[1]"));
+		click(element(Locators.xpath, "//span[text()='0']"));
+		click(element(Locators.xpath, "//span[text()='30']"));
+		click(element(Locators.xpath, "//div[text()=' OK ']"));
+		click(element(Locators.xpath, "//div[text()='Update']"));
+		click(element(Locators.xpath, "(//div[text()='Close'])[3]"));
+		updateAssert(element(Locators.xpath, "//td[text()='"+pausecodedata[0]+"']//following-sibling::td[2]"), pausecodedata[6]);
+		Assert.assertEquals(getText(element(Locators.xpath, "//td[text()='"+pausecodedata[0]+"']//following-sibling::td[3]")), "00:00:30");
+
+	}
+	
+	@Test(dataProvider="AudioData",dataProviderClass=SeleniumBase.class)
+	public void configTC028(String audiodata[]) {
+
+		click(element(Locators.xpath, "//span[text()='Audio Store']"));
+		click(element(Locators.xpath, "//td[text()='"+audiodata[0]+"']//following-sibling::td[2]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light blue--text']"));
+		click(element(Locators.xpath, "(//label[text()='Status']/following-sibling::div)[1]"));
+		dropdown(element(Locators.xpath, "(//div[@role='list'])[3]"), element(Locators.xpath, "(//div[text()='"+audiodata[2]+"'])[2]"));
+		click(element(Locators.xpath, "//div[text()='Update']"));
+		click(element(Locators.xpath, "(//div[text()='Close'])[3]"));
+		updateAssert(element(Locators.xpath, "//td[text()='"+audiodata[0]+"']//following-sibling::td[1]"), audiodata[2]);
+
+
+	}
+	
+	@Test(dataProvider="DidData",dataProviderClass=SeleniumBase.class)
+	public void configTC029(String diddata[]) {
+
+		click(element(Locators.xpath, "//span[text()='DID Number']"));
+		click(element(Locators.xpath, "//td[text()='"+diddata[0]+"']//following-sibling::td[4]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light blue--text']"));
+		click(element(Locators.xpath, "//label[text()='Status']/following-sibling::div"));
+		dropdown(element(Locators.xpath, "(//div[@role='list'])[2]"), element(Locators.xpath, "//div[text()='"+diddata[5]+"']"));
+		click(element(Locators.xpath, "//div[text()='Update']"));
+		click(element(Locators.xpath, "(//div[@class='v-btn__content'][normalize-space()='Close'])[4]"));
+		updateAssert(element(Locators.xpath, "//td[text()='"+diddata[0]+"']//following-sibling::td[2]"), diddata[5]);
+
+
+	}
+	
+	@Test(dataProvider="TagData",dataProviderClass=SeleniumBase.class)
+	public void configTC030(String tagdata[]) {
+
+		click(element(Locators.xpath, "//span[text()='Tags']"));
+		click(element(Locators.xpath, "//td[text()='"+tagdata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light green--text']"));
+		click(element(Locators.xpath, "//label[text()='Status']/following-sibling::div"));
+		dropdown(element(Locators.xpath, "(//div[@role='list'])[2]"), element(Locators.xpath, "//div[text()='"+tagdata[4]+"']"));
+		click(element(Locators.xpath, "//div[text()='Update']"));
+		click(element(Locators.xpath, "//div[text()='Close']"));
+		updateAssert(element(Locators.xpath, "//td[text()='"+tagdata[0]+"']//following-sibling::td[2]"), tagdata[4]);
+
+
+	}
+	
+	@Test(dataProvider="AnnouncementData",dataProviderClass=SeleniumBase.class)
+	public void configTC031(String announcementData[]) {
+
+		click(element(Locators.xpath, "//span[text()='Announcements']"));
+		click(element(Locators.xpath, "//td[text()='"+announcementData[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light blue--text']"));
+		click(element(Locators.xpath, "//label[text()='Status']/following-sibling::div"));
+		dropdown(element(Locators.xpath, "(//div[@role='list'])[4]"), element(Locators.xpath, "(//div[text()='"+announcementData[5]+"'])[2]"));
+		click(element(Locators.xpath, "//div[text()='Update']"));		
+		click(element(Locators.xpath, "(//div[@class='v-btn__content'][normalize-space()='Close'])[4]"));
+		updateAssert(element(Locators.xpath, "//td[text()='"+announcementData[0]+"']//following-sibling::td[2]"), announcementData[5]);
+
+	}
+	
+	@Test(dataProvider="ScriptData",dataProviderClass=SeleniumBase.class)
+	public void configTC032(String scriptdata[]) {
+
+		click(element(Locators.xpath, "//span[text()='Scripts']"));
+		click(element(Locators.xpath, "//td[text()='"+scriptdata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light blue--text']"));
+		click(element(Locators.xpath, "//label[text()='Status']/following-sibling::div"));
+		dropdown(element(Locators.xpath, "(//div[@role='list'])[2]"), element(Locators.xpath, "//div[text()='"+scriptdata[7]+"']"));
+		click(element(Locators.xpath, "//div[text()='Update']"));
+		click(element(Locators.xpath, "(//div[text()='Close'])[3]"));
+		click(element(Locators.xpath, "//i[@class='fas fa-refresh']"));
+		updateAssert(element(Locators.xpath, "//td[text()='"+scriptdata[0]+"']//following-sibling::td[2]"), scriptdata[7]);
+
+
+	}
+	
+	
+	@Test(dataProvider="TimezoneData",dataProviderClass=SeleniumBase.class)
+	public void configTC033(String timezonedata[]) {
+
+		click(element(Locators.xpath, "//span[text()='Timezone']"));
+		click(element(Locators.xpath, "//td[text()='"+timezonedata[0]+"']//following-sibling::td[5]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light blue--text']"));
+		click(element(Locators.xpath, "(//label[text()='Status']/following-sibling::div)[1]"));
+		dropdown(element(Locators.xpath, "(//div[@role='list'])[3]"), element(Locators.xpath, "//div[text()='"+timezonedata[8]+"']"));
+		click(element(Locators.xpath, "//div[text()='Update']"));
+		click(element(Locators.xpath, "(//div[text()='Close'])[3]"));
+		updateAssert(element(Locators.xpath, "//td[text()='"+timezonedata[0]+"']//following-sibling::td[2]"), timezonedata[8]);
+
+
+	}
+	
+	@Test(dataProvider="MeetingTitleData",dataProviderClass=SeleniumBase.class)
+	public void configTC034(String meetingtitledata[]) {
+
+		click(element(Locators.xpath, "//span[text()='Meeting Title']"));
+		click(element(Locators.xpath, "//td[text()='"+meetingtitledata[0]+"']//following-sibling::td[4]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light blue--text']"));
+		click(element(Locators.xpath, "(//label[text()='Status']/following-sibling::div)[1]"));
+		dropdown(element(Locators.xpath, "(//div[@role='list'])[3]"), element(Locators.xpath, "//div[text()='"+meetingtitledata[5]+"']"));
+		click(element(Locators.xpath, "//div[text()='Update']"));
+		click(element(Locators.xpath, "(//div[text()='Close'])[3]"));
+		deleteAssert(elements(Locators.xpath, "//table[contains(@class,'v-datatable')]//tr//td[1]"), meetingtitledata[0]);
+
+
+	}
+	
 
 
 	//Deletion Flow
 
 	@Test(dataProvider="QueueData",dataProviderClass=SeleniumBase.class)
-	public void configTC023(String queuedata[]) {
+	public void configTC035(String queuedata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Queues']"));
 		click(element(Locators.xpath, "//td[text()='"+queuedata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -369,7 +520,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 
 	@Test(dataProvider="DispoData",dataProviderClass=SeleniumBase.class)
-	public void configTC024(String dispodata[]) {
+	public void configTC036(String dispodata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Dispositions']"));
 		click(element(Locators.xpath, "//td[text()='"+dispodata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -381,7 +532,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 
 	@Test(dataProvider="SubDispoData",dataProviderClass=SeleniumBase.class)
-	public void configTC025(String subdispoData[]) {
+	public void configTC037(String subdispoData[]) {
 
 		click(element(Locators.xpath, "//span[text()='Sub-Dispositions']"));
 		click(element(Locators.xpath, "//td[text()='"+subdispoData[1]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -393,7 +544,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 
 	@Test(dataProvider="LeadStatusData",dataProviderClass=SeleniumBase.class)
-	public void configTC026(String leadstatusdata[]) {
+	public void configTC038(String leadstatusdata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Lead Status']"));
 		click(element(Locators.xpath, "//td[text()='"+leadstatusdata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -404,7 +555,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 
 	@Test(dataProvider="TicketStatusData",dataProviderClass=SeleniumBase.class)
-	public void configTC027(String ticketStatusdata[]) {
+	public void configTC039(String ticketStatusdata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Ticket Status']"));
 		click(element(Locators.xpath, "//td[text()='"+ticketStatusdata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -416,7 +567,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 
 	@Test(dataProvider="PausecodeData",dataProviderClass=SeleniumBase.class)
-	public void configTC028(String pausecodedata[]) {
+	public void configTC040(String pausecodedata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Pause Codes']"));
 		click(element(Locators.xpath, "//td[text()='"+pausecodedata[0]+"']//following-sibling::td[4]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -428,7 +579,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 
 	@Test(dataProvider="AudioData",dataProviderClass=SeleniumBase.class)
-	public void configTC029(String audiodata[]) {
+	public void configTC041(String audiodata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Audio Store']"));
 		click(element(Locators.xpath, "//td[text()='"+audiodata[0]+"']//following-sibling::td[2]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -440,7 +591,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 
 	@Test(dataProvider="BlocklistData",dataProviderClass=SeleniumBase.class)
-	public void configTC030(String blocklistdata[]) {
+	public void configTC042(String blocklistdata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Block List']"));
 		click(element(Locators.xpath, "	//td[text()='9090909091']//following-sibling::td[1]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));  
@@ -452,7 +603,7 @@ public class ConfigurationTest extends SeleniumBase{
 
 	
 	@Test(dataProvider="DidData",dataProviderClass=SeleniumBase.class)
-	public void configTC031(String diddata[]) {
+	public void configTC043(String diddata[]) {
 
 		click(element(Locators.xpath, "//span[text()='DID Number']"));
 		click(element(Locators.xpath, "//td[text()='"+diddata[0]+"']//following-sibling::td[4]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -464,7 +615,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 	
 	@Test(dataProvider="TagData",dataProviderClass=SeleniumBase.class)
-	public void configTC032(String tagdata[]) {
+	public void configTC044(String tagdata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Tags']"));
 		click(element(Locators.xpath, "//td[text()='"+tagdata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -476,7 +627,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 	
 	@Test(dataProvider="AnnouncementData",dataProviderClass=SeleniumBase.class)
-	public void configTC033(String announcementData[]) {
+	public void configTC045(String announcementData[]) {
 
 		click(element(Locators.xpath, "//span[text()='Announcements']"));
 		click(element(Locators.xpath, "//td[text()='"+announcementData[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -487,7 +638,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 	
 	@Test(dataProvider="ScriptData",dataProviderClass=SeleniumBase.class)
-	public void configTC034(String scriptdata[]) {
+	public void configTC046(String scriptdata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Scripts']"));
 		click(element(Locators.xpath, "//td[text()='"+scriptdata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -500,7 +651,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 	
 	@Test(dataProvider="InboundData",dataProviderClass=SeleniumBase.class)
-	public void configTC035(String inbounddata[]) {
+	public void configTC047(String inbounddata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Inbound Route']"));
 		click(element(Locators.xpath, "//td[text()='"+inbounddata[0]+"']//following-sibling::td[3]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -511,7 +662,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 	
 	@Test(dataProvider="TimezoneData",dataProviderClass=SeleniumBase.class)
-	public void configTC036(String timezonedata[]) {
+	public void configTC048(String timezonedata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Timezone']"));
 		click(element(Locators.xpath, "//td[text()='"+timezonedata[0]+"']//following-sibling::td[5]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -523,7 +674,7 @@ public class ConfigurationTest extends SeleniumBase{
 	}
 	
 	@Test(dataProvider="MeetingTitleData",dataProviderClass=SeleniumBase.class)
-	public void configTC037(String meetingtitledata[]) {
+	public void configTC049(String meetingtitledata[]) {
 
 		click(element(Locators.xpath, "//span[text()='Meeting Title']"));
 		click(element(Locators.xpath, "//td[text()='"+meetingtitledata[0]+"']//following-sibling::td[4]//i[@class='v-icon mr-4 v-icon--link material-icons theme--light red--text']"));
@@ -533,6 +684,8 @@ public class ConfigurationTest extends SeleniumBase{
 
 
 	}
+	
+	
 
 }
 
